@@ -165,7 +165,7 @@ class EndianInputStream(val base: InputStream, val defaultByteOrder: ByteOrder) 
     }
     override fun readShort(): Short = readShort(defaultByteOrder)
     override fun readUnsignedShort(): Int = readUShort(defaultByteOrder).toInt()
-    override fun readChar(): Char = readShort(defaultByteOrder).toChar()
+    override fun readChar(): Char = readShort(defaultByteOrder).toInt().toChar()
     override fun readInt(): Int = readInt(defaultByteOrder)
     override fun readLong(): Long = readLong(defaultByteOrder)
     override fun readFloat(): Float = java.lang.Float.intBitsToFloat(readInt())
