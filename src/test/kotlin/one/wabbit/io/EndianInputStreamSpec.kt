@@ -1,16 +1,17 @@
 package std.data
 
-import one.wabbit.io.EndianInputStream
 import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
 import java.nio.ByteOrder
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import one.wabbit.io.EndianInputStream
 
 class EndianInputStreamSpec {
     infix fun <A> A.mustBe(that: A) = assertEquals(that, this)
 
-    @Test fun test() {
+    @Test
+    fun test() {
         val bos = ByteArrayOutputStream()
         val os = DataOutputStream(bos)
 

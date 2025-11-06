@@ -5,10 +5,9 @@ import java.io.EOFException
 import java.io.InputStream
 import java.nio.ByteOrder
 
-class EndianInputStream(val base: InputStream, val defaultByteOrder: ByteOrder) : InputStream(), DataInput {
-    override fun read(): Int {
-        return base.read()
-    }
+class EndianInputStream(val base: InputStream, val defaultByteOrder: ByteOrder) :
+    InputStream(), DataInput {
+    override fun read(): Int = base.read()
 
     override fun available(): Int = base.available()
 
@@ -92,22 +91,22 @@ class EndianInputStream(val base: InputStream, val defaultByteOrder: ByteOrder) 
 
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             return ((b1 shl 56) or
-                    ((b2 and 0xff) shl 48) or
-                    ((b3 and 0xff) shl 40) or
-                    ((b4 and 0xff) shl 32) or
-                    ((b5 and 0xff) shl 24) or
-                    ((b6 and 0xff) shl 16) or
-                    ((b7 and 0xff) shl 8) or
-                    ((b8 and 0xff) shl 0))
+                ((b2 and 0xff) shl 48) or
+                ((b3 and 0xff) shl 40) or
+                ((b4 and 0xff) shl 32) or
+                ((b5 and 0xff) shl 24) or
+                ((b6 and 0xff) shl 16) or
+                ((b7 and 0xff) shl 8) or
+                ((b8 and 0xff) shl 0))
         } else {
             return ((b8 shl 56) or
-                    ((b7 and 0xff) shl 48) or
-                    ((b6 and 0xff) shl 40) or
-                    ((b5 and 0xff) shl 32) or
-                    ((b4 and 0xff) shl 24) or
-                    ((b3 and 0xff) shl 16) or
-                    ((b2 and 0xff) shl 8) or
-                    ((b1 and 0xff) shl 0))
+                ((b7 and 0xff) shl 48) or
+                ((b6 and 0xff) shl 40) or
+                ((b5 and 0xff) shl 32) or
+                ((b4 and 0xff) shl 24) or
+                ((b3 and 0xff) shl 16) or
+                ((b2 and 0xff) shl 8) or
+                ((b1 and 0xff) shl 0))
         }
     }
 
@@ -147,34 +146,39 @@ class EndianInputStream(val base: InputStream, val defaultByteOrder: ByteOrder) 
         }
     }
 
-
     override fun readBoolean(): Boolean {
         val b1 = base.read()
         if (b1 < 0) throw EOFException()
         return b1 != 0
     }
+
     override fun readByte(): Byte {
         val b1 = base.read()
         if (b1 < 0) throw EOFException()
         return b1.toByte()
     }
+
     override fun readUnsignedByte(): Int {
         val b1 = base.read()
         if (b1 < 0) throw EOFException()
         return b1 and 0xFF
     }
+
     override fun readShort(): Short = readShort(defaultByteOrder)
+
     override fun readUnsignedShort(): Int = readUShort(defaultByteOrder).toInt()
+
     override fun readChar(): Char = readShort(defaultByteOrder).toInt().toChar()
+
     override fun readInt(): Int = readInt(defaultByteOrder)
+
     override fun readLong(): Long = readLong(defaultByteOrder)
+
     override fun readFloat(): Float = java.lang.Float.intBitsToFloat(readInt())
+
     override fun readDouble(): Double = java.lang.Double.longBitsToDouble(readLong())
 
-    override fun skipBytes(n: Int): Int {
-        return base.skip(n.toLong()).toInt()
-    }
-    override fun readLine(): String {
-        throw UnsupportedOperationException("readLine")
-    }
+    override fun skipBytes(n: Int): Int = base.skip(n.toLong()).toInt()
+
+    override fun readLine(): String = throw UnsupportedOperationException("readLine")
 }
